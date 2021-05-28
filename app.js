@@ -4,8 +4,6 @@ const server = app.listen(8080, function(){
     console.log("Listening on 8080");
 });
 const io = require('socket.io')(server);
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/static"));
 app.set('views', __dirname + '/views'); 
 app.set('view engine', 'ejs');
@@ -13,10 +11,6 @@ app.set('view engine', 'ejs');
 app.get("/", (request, response) => {
     response.render("index");
 });
-
-// app.post("/result", function(request, response){
-//     response.render("result", {data: request.body});
-// });
 
 io.on('connection', (socket) => { //2
     console.log("User connected " + socket.id);
@@ -31,8 +25,4 @@ io.on('connection', (socket) => { //2
         };
         socket.emit("updated_message", {message: message});
     });
-    // socket.emit('greeting', { message: 'Greetings, from server Node, brought to you by Sockets! -Server' }); //3
-    // socket.on('thankyou', function (data) { //7
-    //     console.log(data.message); //8 (note: this log will be on your server's terminal)
-    // });
 });
