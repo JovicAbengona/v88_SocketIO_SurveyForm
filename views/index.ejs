@@ -16,7 +16,7 @@
         <section>
             <div id="message"></div>
             <form id="form">
-                <label>Your Name: <input type="text" id="name"></label>
+                <label>Your Name: <input type="text" id="name" autofocus></label>
                 <label>Dojo Location:
                     <select id="dojo_location">
                         <option value=""></option>
@@ -43,18 +43,19 @@
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script>
             $(document).ready(function(){
-                const form = document.querySelector("#form");
+                const form   = document.querySelector("#form");
                 const socket = io();
 
                 $("#form").submit(function(e){
                     e.preventDefault();
                     let form_data = {
-                        name: $("#name").val(),
+                        name:          $("#name").val(),
                         dojo_location: $("#dojo_location").val(),
                         fave_language: $("#fave_language").val(),
-                        comment: $("#comment").val(),
+                        comment:       $("#comment").val(),
                     }
                     $(this)[0].reset();
+                    $("#name").focus();
 
                     socket.emit("posting_form", {form_data: form_data});
                 });
